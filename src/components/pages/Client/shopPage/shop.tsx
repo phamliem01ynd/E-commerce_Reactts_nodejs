@@ -27,7 +27,7 @@ function Shop() {
         setCategories(result2.data);
       }
     };
-    fetchApi();
+    fetchApi(); 
   }, [pageParams]);
   console.log("prodyctPage: ", products);
   console.log("category: ", categories);
