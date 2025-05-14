@@ -7,6 +7,7 @@ import LayoutAdmin from "../components/layouts/Admin/layoutAdmin";
 import ProductPage from "../components/pages/admin/productPage/productPage";
 import ProductClient from "../components/pages/Client/productPage/productPage";
 import Cart from "../components/pages/Client/cart/cart";
+import Shop from "../components/pages/Client/shopPage/shop";
 
 export const routes = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ export const routes = createBrowserRouter([
       {
         path:'/cart',
         element:<Cart/>
+      },
+      {
+        path:'/shop',
+        element:<Shop/>
       }
     ]
   },
