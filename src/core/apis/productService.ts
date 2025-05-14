@@ -13,10 +13,14 @@ export const searchProduct = async (search : string | null) => {
   });
 }
 
-export const paginationProduct = async (page: string | null) => {
+export const paginationProduct = async (page: string | null, category_id: string | number, sort: string | null) => {
   const api_url = "product/paginated";
   return axios.get<Product>(api_url, {
-    params: {page}
+    params: {
+      page,
+      id: category_id,
+      sort,
+    },
   })
 }
 export const editProduct = async (id: number, data: Product) => {
