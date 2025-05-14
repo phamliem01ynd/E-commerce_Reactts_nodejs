@@ -1,0 +1,201 @@
+.layout_cart {
+  width: 100vw;
+  height: auto;
+  padding: 35px 20px;
+  background: #fff;
+  background-image: linear-gradient(to right, #f3ffe3, #9eff1f);
+}
+
+.cart {
+  width: 90%;
+  height: auto;
+  margin: 25px auto;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  padding: 50px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+  h3 {
+    margin: 10px 0;
+    font-size: 16px;
+  }
+  &__detail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 15px;
+    .voucher {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #a9a9a9;
+
+      span {
+        font-size: 12px;
+        margin: 8px 10px;
+        color: #a9a9a9;
+      }
+      .input {
+        margin: 10px 0;
+        border-radius: 15px;
+      }
+      input {
+        padding: 5px 40px 10px 40px;
+      }
+      .btn-buy {
+        background-image: linear-gradient(to right, #f9d8f8, #fc35f5);
+        width: 200px;
+        padding: 5px 0;
+        border-radius: 15px;
+        height: 30px;
+        span {
+          font-size: 12px;
+          font-weight: 600;
+          color: #000;
+        }
+      }
+    }
+    .address {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #a9a9a9;
+
+      .select {
+        margin: 8px 0px;
+        border-radius: 15px;
+        background: #eff3f6;
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+      .btn-buy {
+        background-image: linear-gradient(to right, #f9d8f8, #fc35f5);
+        width: 200px;
+        padding: 5px 0;
+        border-radius: 15px;
+        height: auto;
+        span {
+          font-size: 12px;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+  &__item {
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+      rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+      rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    thead{
+      tr{
+        background-color: #9eff1f;
+      }
+    }
+    table {
+      background-color: #fff;
+      border-radius: 20px;
+    }
+    .product {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      img {
+        width: 135px;
+        height: 200px;
+        object-fit: contain;
+        margin-right: 15px;
+      }
+      .description {
+        p {
+          font-size: 1.6rem;
+        }
+        h3 {
+          margin: 0;
+        }
+      }
+    }
+    .quantity_cart {
+      margin-bottom: 15px;
+      span:first-child {
+        margin-right: 18px;
+      }
+      button {
+        background-image: linear-gradient(to right, #f9d8f8, #fc35f5);
+        cursor: pointer;
+        border-radius: 5px;
+        border: none;
+      }
+      input {
+        width: 50px;
+        height: auto;
+        margin: 0 5px;
+        border-radius: 10px;
+        text-align: center;
+      }
+      span:last-child {
+        margin-left: 18px;
+      }
+      button {
+        width: 25px;
+      }
+    }
+    .price {
+      font-size: 14px;
+    }
+    .price_old {
+      color: rgb(146, 4, 4);
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+    .price_new {
+      color: #fc35f5;
+    }
+    .total {
+      font-size: 14px;
+      color: #fc35f5;
+    }
+    th {
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #fc35f5;
+    }
+  }
+  &__total {
+    padding-bottom: 15px;
+    background: #ffd28d;
+    border-radius: 15px;
+    margin: 15px 10px;
+
+    .title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .btn-buy {
+      background-image: linear-gradient(to right, #f9d8f8, #fc35f5);
+      width: 200px;
+      padding: 5px 0;
+      border-radius: 15px;
+      height: 30px;
+      span {
+        font-size: 12px;
+        font-weight: 600;
+        color: #000;
+      }
+    }
+  }
+}

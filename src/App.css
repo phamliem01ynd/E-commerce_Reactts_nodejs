@@ -1,0 +1,47 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+:root{
+  --color-text1: #000000;
+  --color-text2: #fff;
+  --background-one: #f5f5f5;
+  --background-two: #08ecfd;
+}
+
+body{
+  font-size: 1.6rem;
+  line-height: 1.5;
+  background-color: var(--background-one);
+  text-rendering: optimizeSpeed;
+  transition: all 0.3s ease-in-out;
+}
+
+.dark-theme {
+  background-color: #212121;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+  a{
+    color: #fff;
+  }
+  span{
+    color: #fff;
+  }
+}
+
+
+
+html{
+  font-size: 62.5%;
+
+}
+
+ul {
+  list-style-type: none;
+}
+a {
+  text-decoration: none;
+}
+
+
