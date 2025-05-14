@@ -60,6 +60,12 @@ function Header() {
     setSearchStatus(!searchStatus);
     setIsOpen(!isOpen);
     setSearchParams({ search: searchTerm });
+    if(searchTerm === ""){
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.delete("search");
+      setSearchParams(newSearchParams);
+    }
+
   };
   const { theme, toggleTheme } = useContext(ThemeService);
   const { auth, setAuth } = useContext(AuthService);

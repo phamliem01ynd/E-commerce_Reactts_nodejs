@@ -212,7 +212,7 @@ function Cart() {
         id: auth.user.id,
         distance: distance,
         typeTransport: transport,
-        money: 0, // sẽ cập nhật sau
+        money: 0, // sẽ cập nhật sau  
       };
 
       await addTransport(arrayTransport); // chờ add xong
