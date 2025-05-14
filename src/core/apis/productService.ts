@@ -1,3 +1,4 @@
+import { PaginationProductResponse } from "../../models/paginationProduct";
 import { Product } from "../../models/Product";
 import axios from "./axios_Customer";
 
@@ -15,7 +16,7 @@ export const searchProduct = async (search : string | null) => {
 
 export const paginationProduct = async (page: string | null) => {
   const api_url = "product/paginated";
-  return axios.get<Product>(api_url, {
+  return axios.get<PaginationProductResponse>(api_url, {
     params: {page}
   })
 }

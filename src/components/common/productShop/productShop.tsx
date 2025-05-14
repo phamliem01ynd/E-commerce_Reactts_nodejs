@@ -1,19 +1,22 @@
 import { Grid } from "@material-ui/core";
 import { useCartStore } from "../../../core/store/cartStore";
 import { Product } from "../../../models/Product";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { FaRegEye } from "react-icons/fa";
 import { MdFavorite } from "react-icons/md";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { TranslateService } from "../../../core/services/translateService";
 import "./productShop.scss";
 import { Pagination } from "@material-ui/lab";
 interface productShop {
-  products: Product[];  
+  products: Product[];
+  quantityPage: number;
 }
 
-function ProductShop({ products }: productShop) {
+function ProductShop({ products, quantityPage }: productShop) {
   const { translates, isLanguage } = useContext(TranslateService);
+  const [pageParams, setPageParams] = useSearchParams();
+
   const cart = useCartStore((state) => state.cart);
   console.log("products: ", products);
 
@@ -24,6 +27,12 @@ function ProductShop({ products }: productShop) {
     }
     dispatch(addToCart(item.id, 1, item));
     message.success(`${item.name} đã được thêm vào giỏ hàng thành công`);
+  };
+  const handleChangePagination = (
+    event: React.ChangeEvent<unknown>,
+    page: number
+  ) => {
+    setPageParams({ page: page.toString() });
   };
   return (
     <>
@@ -86,8 +95,12 @@ function ProductShop({ products }: productShop) {
             <p>Không tìm thấy sản phẩm nào thỏa mãn</p>
           )}
         </Grid>
-        <div className='paginator'>
-          <Pagination count={10} color="secondary" />
+        <div className="paginator">
+          <Pagination
+            count={quantityPage}
+            color="secondary"
+            onChange={handleChangePagination}
+          />
         </div>
       </div>
     </>

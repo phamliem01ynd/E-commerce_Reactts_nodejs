@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Category } from "../../../../models/Category";
 import { Product } from "../../../../models/Product";
 import { getCategoriesAll } from "../../../../core/apis/categoriesService";
-import { getProductAll } from "../../../../core/apis/productService";
-import { Link } from "react-router-dom";
+import { paginationProduct } from "../../../../core/apis/productService";
+import { Link, useSearchParams } from "react-router-dom";
 import { Grid, MenuItem, Select } from "@material-ui/core";
 import "./shop.scss";
 import ProductShop from "../../../common/productShop/productShop";
@@ -11,19 +11,26 @@ import ProductShop from "../../../common/productShop/productShop";
 function Shop() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
+  const [quantityPage, setQuantityPage] = useState<number>(1);
+  const [pageParams, setPageParams] = useSearchParams();
+
   useEffect(() => {
+    const page = pageParams.get("page") || "1";
     const fetchApi = async () => {
       const [result1, result2] = await Promise.all([
-        getProductAll(),
+        paginationProduct(page),
         getCategoriesAll(),
       ]);
-      if (Array.isArray(result1.data) && Array.isArray(result2.data)) {
-        setProducts(result1.data);
+      if (Array.isArray(result1.data.products) && Array.isArray(result2.data)) {
+        setProducts(result1.data.products);
+        setQuantityPage(result1.data.quantityPage);
         setCategories(result2.data);
       }
     };
     fetchApi();
-  }, []);
+  }, [pageParams]);
+  console.log("prodyctPage: ", products);
+  console.log("category: ", categories);
 
   const [categoryProduct, setCategoryProduct] = useState<number | null>(null);
   const [sortPrice, setSortPrice] = useState<string | null>(null);
@@ -101,7 +108,7 @@ function Shop() {
               <img src="carousel/macbook.jpg" alt="img" />
             </div>
             <div className="productShop">
-              <ProductShop products={sortProduct} />
+              <ProductShop products={sortProduct} quantityPage={quantityPage} />
             </div>
           </Grid>
         </Grid>
