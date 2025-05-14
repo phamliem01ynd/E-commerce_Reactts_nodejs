@@ -5,6 +5,10 @@ import { MdDelete } from "react-icons/md";
 import {
   Button,
   createStyles,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   FormControl,
   Grid,
   InputLabel,
@@ -27,6 +31,7 @@ import { Countries, districts, wards } from "../../../../models/Countries";
 import { geo, getCountryAll, gps } from "../../../../core/apis/countryService";
 import { useDistanceStore } from "../../../../core/store/distanceStore";
 import { AuthService } from "../../../../core/services/authService";
+import { Alert } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,7 +48,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-
+interface productDelete {
+  status: boolean;
+  id: number | string;
+}
 function Cart() {
   const [countries, setCountries] = useState<Countries[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -70,7 +78,14 @@ function Cart() {
   const [transport, setTransport] = useState<string | null>(null);
   const [transportPrice, setTransportPrice] = useState<number>(0);
   const { auth } = useContext(AuthService);
+  const deleteProduct = useCartStore((state) => state.deleteProduct);
+  const deleteAll = useCartStore((state) => state.deleteAll);
+  const [alert, setAlert] = useState<boolean>(false);
   const [price, setPrice] = useState<number>(0);
+  const [productDelete, setProductDelete] = useState<productDelete>({
+    status: false,
+    id: 0,
+  });
 
   const handleReduce = (id: string | number) => {
     const filterCart = cart.find((item) => item.id === id);
@@ -107,10 +122,6 @@ function Cart() {
     };
     fetchApi();
   }, []);
-
-  const filterCategory = cart.find((item) =>
-    categories.some((category) => category.id === item.category_id)
-  );
 
   const handleCountryChange = (
     event: React.ChangeEvent<{ value: Countries }>
@@ -206,6 +217,18 @@ function Cart() {
     }
   };
 
+  const handleDelete = (id: string | number) => {
+    if (id) {
+      deleteProduct(id);
+      setProductDelete({ status: false, id: 0});
+    }
+  };
+
+  const handleDeleteAll = () => {
+    deleteAll();
+    setAlert(false);
+  };
+
   const handleBuy = async () => {
     if (distance) {
       const arrayTransport = {
@@ -246,32 +269,93 @@ function Cart() {
 
   return (
     <div className="layout_cart">
+      <Dialog open={alert} onClose={() => setAlert(false)}>
+        <DialogTitle>Xác nhận xóa tất cả</DialogTitle>
+        <DialogContent>
+          <Alert severity="warning">
+            Thông báo — Bạn có chắc muốn xóa tất cả sản phẩm!
+          </Alert>
+        </DialogContent>
+        <DialogActions>
+          <Button color="primary" onClick={() => setAlert(false)}>
+            Không
+          </Button>
+          <Button color="secondary" onClick={handleDeleteAll}>
+            Xóa
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={productDelete.status} onClose={() => setProductDelete({status: false, id: 0})}>
+        <DialogTitle>Xác nhận xóa </DialogTitle>
+        <DialogContent>
+          <Alert severity="warning">Thông báo — Bạn có chắc muốn xóa !</Alert>
+        </DialogContent>
+        <DialogActions>
+          <Button color="primary" onClick={() => setProductDelete({status: false, id: 0})}>
+            Không
+          </Button>
+          <Button color="secondary" onClick={() => handleDelete(productDelete.id)}>
+            Xóa
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       {/* <h2>{translates.Shopping_Bag}</h2>
       <p>{countProduct}items in your cart</p> */}
       <Grid container>
         <div className="cart">
           <Grid item xl={9} lg={9}>
             <div className="cart__item">
-              <div className="des" style={{ margin: "15px" }}>
-                <h2>{translates.Shopping_Bag}</h2>
-                <p>{countProduct} items in your cart</p>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div className="des" style={{ margin: "15px" }}>
+                  <h2>{translates.Shopping_Bag}</h2>
+                  <p>{countProduct} items in your cart</p>
+                </div>
+                <div
+                  className="deleteAll"
+                  style={{ marginRight: "15px" }}
+                  onClick={() => setAlert(true)}
+                >
+                  <Button color="primary" variant="contained">
+                    {translates.DeleteAll}
+                  </Button>
+                </div>
               </div>
 
               <TableContainer>
                 <Table aria-label="simple table">
                   <TableHead>
                     <TableRow>
-                      <TableCell style={{ paddingRight: 24 }} align="center">
+                      <TableCell
+                        style={{ paddingRight: 24 }}
+                        align="center"
+                        className="productt"
+                      >
                         {translates.product}
                       </TableCell>
-                      <TableCell align="center">{translates.Price}</TableCell>
-                      <TableCell style={{ width: 60 }} align="center">
+                      <TableCell align="center" className="prices">
+                        {translates.Price}
+                      </TableCell>
+                      <TableCell
+                        style={{ width: 60 }}
+                        align="center"
+                        className="quantities"
+                      >
                         {translates.Quantity}
                       </TableCell>
-                      <TableCell align="center">
+                      <TableCell align="center" className="totalprice">
                         {translates.Total_price}
                       </TableCell>
-                      <TableCell align="center">{translates.Action}</TableCell>
+                      <TableCell align="center" className="action">
+                        {translates.Action}
+                      </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -284,8 +368,12 @@ function Cart() {
                                 <img src={item.image} alt="image_product" />
                                 <div className="description">
                                   <h3>{item.name}</h3>
-                                  <p className="sold">{item.sold}</p>
-                                  <p className="discount">{item.discount}</p>
+                                  <p className="sold">
+                                    {translates.Sold}: {item.sold}
+                                  </p>
+                                  <p className="discount">
+                                    {translates.Discount}: {item.discount}
+                                  </p>
                                 </div>
                               </div>
                             </TableCell>
@@ -313,7 +401,7 @@ function Cart() {
                                   +
                                 </button>
                               </div>
-                            </TableCell >
+                            </TableCell>
                             <TableCell align="center">
                               <div className="total">
                                 đ{" "}
@@ -323,18 +411,22 @@ function Cart() {
                               </div>
                             </TableCell>
                             <TableCell align="center">
-                              <Button>
-                                <div style={{ fontSize: "24px" }}>
-                                  <MdDelete />
-                                </div>
-                              </Button>
-                              <Button></Button>
+                              <div className="action">
+                                <Button>
+                                  <div
+                                    style={{ fontSize: "24px" }}
+                                    onClick={() => setProductDelete({ status: true, id: item.id})}
+                                  >
+                                    <MdDelete />
+                                  </div>
+                                </Button>
+                              </div>
                             </TableCell>
                           </TableRow>
                         ))}
                       </>
                     ) : (
-                      "Không có sản phẩm trong giỏ hàng"
+                      <p>Không có sản phẩm nào trong giỏ hàng</p>
                     )}
                   </TableBody>
                 </Table>
