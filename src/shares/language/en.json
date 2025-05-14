@@ -50,7 +50,11 @@
   "Cart_total":"Cart Total",
   "update":"Update",
   "apply": "Apply",
-  "cart_total":"Tổng số"
+  "cart_total":"Tổng số",
+  "category":"Danh mục",
+  "filterProduct": "Lọc sản phẩm",
+  "Sort":"Sắp xếp",
+  "ProductAll":"Tất cả sản phẩm"
 
 }
 

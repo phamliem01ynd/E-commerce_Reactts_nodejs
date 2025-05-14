@@ -50,5 +50,9 @@
   "Cart_total":"Tổng tiền",
   "update":"Cập nhật",
   "apply": "Áp dụng",
-  "cart_total":"Cart Total"
+  "cart_total":"Cart Total",
+  "category":"Category",
+  "filterProduct": "Product Filter",
+  "Sort":"Sort",
+  "ProductAll":"Product All"
 }
