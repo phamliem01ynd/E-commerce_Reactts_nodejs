@@ -13,6 +13,12 @@ export const searchProduct = async (search : string | null) => {
   });
 }
 
+export const paginationProduct = async (page: string | null) => {
+  const api_url = "product/paginated";
+  return axios.get<Product>(api_url, {
+    params: {page}
+  })
+}
 export const editProduct = async (id: number, data: Product) => {
   const api_url = `/product/update/${id}`;
   const formData = new FormData();
