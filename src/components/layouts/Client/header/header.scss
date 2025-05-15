@@ -38,17 +38,32 @@
     }
   }
 }
-header {
+.header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100vw;
-  height: 80px;
+  height: 70px;
   position: sticky;
   z-index: 999;
   top: 0;
   left: 0;
-  background-image: linear-gradient(to right, #f9d8f8, #fc35f5);
+  border-bottom: 1px solid #eee9e9;
+}
+.header-menu {
+  margin: 10px 50px;
+}
+header {
+  width: 100vw;
+  height: 120px;
+  position: sticky;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 .formSearch {
@@ -61,6 +76,7 @@ header {
   border-radius: 8px;
   position: relative;
   transition: width 0.3s ease-in-out;
+  margin-right: 15px;
   &.action {
     width: 150px;
     height: 30px;
@@ -94,7 +110,7 @@ header {
     align-items: center;
     justify-content: center;
     transition: transform 0.3s ease-in-out;
-    &:hover{
+    &:hover {
       scale: 1.1;
     }
   }
