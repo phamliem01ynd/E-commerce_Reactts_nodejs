@@ -54,5 +54,10 @@
   "category":"Category",
   "filterProduct": "Product Filter",
   "Sort":"Sort",
-  "ProductAll":"Product All"
+  "ProductAll":"Product All",
+  "Ram": "Bộ nhớ",
+  "Storage":"Lưu trữ",
+  "OS":"Hệ điều hành",
+  "Connect": "Kết nối",
+  "Capacity": "Công suất"
 }

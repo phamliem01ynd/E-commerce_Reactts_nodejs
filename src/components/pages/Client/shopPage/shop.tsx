@@ -7,9 +7,13 @@ import { Link, useSearchParams } from "react-router-dom";
 import {
   Button,
   FormControl,
+  FormControlLabel,
+  FormLabel,
   Grid,
   InputLabel,
   MenuItem,
+  Radio,
+  RadioGroup,
   Select,
 } from "@material-ui/core";
 import "./shop.scss";
@@ -21,8 +25,12 @@ function Shop() {
   const [products, setProducts] = useState<Product[]>([]);
   const [quantityPage, setQuantityPage] = useState<number>(1);
   const [pageParams, setPageParams] = useSearchParams();
-  // const [categoryIdParams, setCategoryIdParams] = useSearchParams();
-  // const [sortParams, setSortParams] = useSearchParams();
+  const [actionCategoryFilter, setActionCategoryFilter] =
+    useState<boolean>(false);
+  const [categoryId, setCategoryId] = useState<number | null>(null);
+  const [categoryDetail, setCategoryDetail] = useState<string | null>(null);
+  const [value, setValue] = useState<string | null>(null);
+
   const { translates } = useContext(TranslateService);
   useEffect(() => {
     const page = pageParams.get("page") || "1";
@@ -44,26 +52,43 @@ function Shop() {
   console.log("prodyctPage: ", products);
   console.log("category: ", categories);
 
+  const handleChangeDetailCategory = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    if (event.target.value) {
+      setCategoryDetail(event.target.value);
+    }
+  };
+
   const handleOnChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const sort = event.target.value;
-    setPageParams((prevParams) => {
-      return { ...prevParams, sort: sort.toString() };
-    });
+    if (event.target.value) {
+      const sort = event.target.value;
+      const params = new URLSearchParams(pageParams);
+      params.set("sort", sort);
+      setPageParams(params);
+    }
   };
 
   const handleShowAllProduct = () => {
-    setCategoryProduct(null);
+    const newParams = new URLSearchParams();
+    newParams.set("page", "1");
+    setPageParams(newParams);
   };
 
   const handleChangeCategory = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    const categoryId = event.target.value;
-    setPageParams((prevParams) => {
-      return { ...prevParams, id: categoryId.toString() };
-    });
+    if (event.target.value) {
+      setActionCategoryFilter(true);
+      const categoryId = event.target.value;
+      const params = new URLSearchParams(pageParams);
+      params.set("id", categoryId);
+      setPageParams(params);
+    }
   };
-
+  const handleChangee = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue((event.target as HTMLInputElement).value);
+  };
   console.log("SortProduct: ", products);
   return (
     <div>
@@ -143,6 +168,79 @@ function Shop() {
                     <MenuItem value="desc">Giá giảm dần</MenuItem>
                   </Select>
                 </FormControl>
+              </div>
+              <div>
+                {actionCategoryFilter ? (
+                  <div>
+                    <FormControl variant="outlined" className="sort">
+                      <InputLabel id="hiddenCategoryFilter">
+                        Detail Filter
+                      </InputLabel>
+                      <Select
+                        labelId="hiddenCategoryFilter"
+                        className="select"
+                        style={{ width: "160px", height: "30px" }}
+                        onChange={handleChangeDetailCategory}
+                        MenuProps={{
+                          disableScrollLock: true,
+                          PaperProps: {
+                            style: {
+                              maxHeight: 150,
+                              overflowY: "auto",
+                            },
+                          },
+                        }}
+                      >
+                        <MenuItem value="RAM">{translates.Ram}</MenuItem>
+                        <MenuItem value="OS">{translates.OS}</MenuItem>
+                        <MenuItem value="Storage">
+                          {translates.Storage}
+                        </MenuItem>
+                        <MenuItem value="Capacity">
+                          {translates.Capacity}
+                        </MenuItem>
+                        <MenuItem value="Connect">
+                          {translates.Connect}
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+              <div>
+                {actionCategoryFilter ? (
+                  <>
+                    <FormControl component="fieldset" className="sort">
+                      <FormLabel
+                        component="legend"
+                        style={{ textAlign: "center" }}
+                      >
+                        Chọn dung lượng RAM
+                      </FormLabel>
+                      <RadioGroup value={value} onChange={handleChangee}>
+                        <FormControlLabel
+                          value="a"
+                          control={<Radio />}
+                          label="64GB"
+                        />
+                        <FormControlLabel
+                          value="b"
+                          control={<Radio />}
+                          label="128GB"
+                        />
+                        <FormControlLabel
+                          value="c"
+                          control={<Radio />}
+                          label="256GB"
+                        />
+                      </RadioGroup>
+                    </FormControl>
+                  </>
+                ) : (
+                  ""
+                )}
               </div>
               ;
             </div>

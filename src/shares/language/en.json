@@ -54,7 +54,12 @@
   "category":"Danh mục",
   "filterProduct": "Lọc sản phẩm",
   "Sort":"Sắp xếp",
-  "ProductAll":"Tất cả sản phẩm"
+  "ProductAll":"Tất cả sản phẩm",
+  "Ram": "RAM",
+  "Storage":"Storage",
+  "OS":"OS",
+  "Connect": "Connect",
+  "Capacity": "Capacity"
 
 }
 
