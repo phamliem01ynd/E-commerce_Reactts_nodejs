@@ -1,49 +1,57 @@
-import { createContext, Dispatch, ReactNode, SetStateAction, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useState,
+} from "react";
 
-interface AuthUserState{
-  id: number | null,
-  name: string | null,
-  email: string | null,
-  phone: string | null,
+interface AuthUserState {
+  id: number | null;
+  name: string | null;
+  email: string | null;
+  phone: string | null;
+  image: string | null;
 }
 
-interface AuthState{
-  isAuthenticated: boolean,
-  user: AuthUserState,
+interface AuthState {
+  isAuthenticated: boolean;
+  user: AuthUserState;
 }
 
-interface AuthContentType{
-  auth: AuthState,
-  setAuth: Dispatch<SetStateAction<AuthState>>
+interface AuthContentType {
+  auth: AuthState;
+  setAuth: Dispatch<SetStateAction<AuthState>>;
 }
 
-interface AuthWrapperProps{
-  children: ReactNode
+interface AuthWrapperProps {
+  children: ReactNode;
 }
 const defaultAuth: AuthContentType = {
   auth: {
     isAuthenticated: false,
-    user: { id: null, name: null, email: null, phone: null }
+    user: { id: null, name: null, email: null, phone: null, image: null },
   },
-  setAuth: () => {} 
+  setAuth: () => {},
 };
 
 export const AuthService = createContext<AuthContentType>(defaultAuth);
 
-export const AuthWrapper =  ({ children } : AuthWrapperProps) => {
-  const [ auth, setAuth ] = useState<AuthState>({
+export const AuthWrapper = ({ children }: AuthWrapperProps) => {
+  const [auth, setAuth] = useState<AuthState>({
     isAuthenticated: false,
-    user:{
+    user: {
       id: null,
       name: null,
-      email:null,
-      phone:null,
-    }
-  })
+      email: null,
+      phone: null,
+      image: null,
+    },
+  });
 
-
-  return <AuthService.Provider value = {{ auth, setAuth}}>
-    { children }
-  </AuthService.Provider>
-}
-
+  return (
+    <AuthService.Provider value={{ auth, setAuth }}>
+      {children}
+    </AuthService.Provider>
+  );
+};
