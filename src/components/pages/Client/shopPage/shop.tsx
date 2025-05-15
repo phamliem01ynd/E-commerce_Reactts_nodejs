@@ -21,12 +21,16 @@ function Shop() {
   const [products, setProducts] = useState<Product[]>([]);
   const [quantityPage, setQuantityPage] = useState<number>(1);
   const [pageParams, setPageParams] = useSearchParams();
+  // const [categoryIdParams, setCategoryIdParams] = useSearchParams();
+  // const [sortParams, setSortParams] = useSearchParams();
   const { translates } = useContext(TranslateService);
   useEffect(() => {
     const page = pageParams.get("page") || "1";
+    const category_id = pageParams.get("id") || "";
+    const sort = pageParams.get("sort") || "";
     const fetchApi = async () => {
       const [result1, result2] = await Promise.all([
-        paginationProduct(page),
+        paginationProduct(page, category_id, sort),
         getCategoriesAll(),
       ]);
       if (Array.isArray(result1.data.products) && Array.isArray(result2.data)) {
@@ -40,30 +44,13 @@ function Shop() {
   console.log("prodyctPage: ", products);
   console.log("category: ", categories);
 
-  const [categoryProduct, setCategoryProduct] = useState<number | null>(null);
-  const [sortPrice, setSortPrice] = useState<string | null>(null);
-
   const handleOnChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortPrice(event.target.value);
+    const sort = event.target.value;
+    setPageParams((prevParams) => {
+      return { ...prevParams, sort: sort.toString() };
+    });
   };
 
-  const filterCategoryProduct = categoryProduct
-    ? products.filter((item) => item.category_id === categoryProduct)
-    : products;
-  const sortProduct = [...filterCategoryProduct].sort((a, b) => {
-    if (sortPrice === "Giá tăng dần") {
-      return (
-        ((100 - a.discount) / 100) * a.price -
-        ((100 - b.discount) / 100) * b.price
-      );
-    }
-    if (sortPrice === "Giá giảm dần") {
-      return (
-        ((100 - b.discount) / 100) * b.price -
-        ((100 - a.discount) / 100) * a.price
-      );
-    }
-  });
   const handleShowAllProduct = () => {
     setCategoryProduct(null);
   };
@@ -71,10 +58,11 @@ function Shop() {
   const handleChangeCategory = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setCategoryProduct(event.target.value);
+    const categoryId = event.target.value;
+    setPageParams((prevParams) => {
+      return { ...prevParams, id: categoryId.toString() };
+    });
   };
-
-  console.log("categoryid: ", categoryProduct);
 
   console.log("SortProduct: ", products);
   return (
@@ -151,8 +139,8 @@ function Shop() {
                       },
                     }}
                   >
-                    <MenuItem value="Giá tăng dần">Giá tăng dần</MenuItem>
-                    <MenuItem value="Giá giảm dần">Giá giảm dần</MenuItem>
+                    <MenuItem value="asc">Giá tăng dần</MenuItem>
+                    <MenuItem value="desc">Giá giảm dần</MenuItem>
                   </Select>
                 </FormControl>
               </div>
@@ -164,7 +152,7 @@ function Shop() {
               <img src="carousel/macbook.jpg" alt="img" />
             </div>
             <div className="productShop">
-              <ProductShop products={sortProduct} quantityPage={quantityPage} />
+              <ProductShop products={products} quantityPage={quantityPage} />
             </div>
           </Grid>
         </Grid>
