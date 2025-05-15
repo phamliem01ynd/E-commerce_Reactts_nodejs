@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { TranslateService } from "../../../../core/services/translateService";
 import {
+  Avatar,
   Badge,
   Button,
   IconButton,
@@ -14,7 +15,6 @@ import "./header.scss";
 import { ThemeService } from "../../../../core/services/themeService";
 import { Link, useSearchParams } from "react-router-dom";
 import { AuthService } from "../../../../core/services/authService";
-import { IoPersonCircle } from "react-icons/io5";
 import { IoIosSearch } from "react-icons/io";
 import Tooltip from "@material-ui/core/Tooltip";
 import { FaCartPlus } from "react-icons/fa";
@@ -85,6 +85,7 @@ function Header() {
         name: null,
         email: null,
         phone: null,
+        image: null,
       },
     });
   };
@@ -126,7 +127,7 @@ function Header() {
             <div className="person">
               {auth.isAuthenticated || localStorage.getItem("access_token") ? (
                 <>
-                  <IoPersonCircle style={{ fontSize: "20px" }} />
+                  <Avatar alt="avatar" src={auth.user.image}></Avatar>
                   <span>{auth.user.name}</span>
                   <div className={classes.root}>
                     <Badge badgeContent={countProduct} color="error">
