@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { TranslateService } from "../../../../core/services/translateService";
 import {
+  Avatar,
   Badge,
   Button,
   IconButton,
@@ -14,7 +15,6 @@ import "./header.scss";
 import { ThemeService } from "../../../../core/services/themeService";
 import { Link, useSearchParams } from "react-router-dom";
 import { AuthService } from "../../../../core/services/authService";
-import { IoPersonCircle } from "react-icons/io5";
 import { IoIosSearch } from "react-icons/io";
 import Tooltip from "@material-ui/core/Tooltip";
 import { FaCartPlus } from "react-icons/fa";
@@ -51,9 +51,16 @@ function Header() {
     background: activeButton === name ? "#fafa" : "",
   });
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorElAvatar, setAnchorElAvatar] = useState<null | HTMLElement>(
+    null
+  );
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
+  };
+  const handleClickAvatar = (event: React.MouseEvent<unknown>) => {
+    setAnchorElAvatar(event.currentTarget);
+    console.log("noname");
   };
 
   const handleSearch = () => {
@@ -73,6 +80,7 @@ function Header() {
 
   const handleClose = () => {
     setAnchorEl(null);
+    setAnchorElAvatar(null);
   };
 
   const handleLogout = () => {
@@ -85,6 +93,7 @@ function Header() {
         name: null,
         email: null,
         phone: null,
+        image: null,
       },
     });
   };
@@ -123,11 +132,59 @@ function Header() {
                 <IoIosSearch onClick={handleSearch} />
               </div>
             </div>
+            <Select
+              value={isLanguage}
+              onChange={toggleLanguage}
+              className="select"
+              MenuProps={{ disableScrollLock: true }}
+            >
+              <MenuItem value="VI">VI</MenuItem>
+              <MenuItem value="ENG">ENG</MenuItem>
+            </Select>
+
+            <Switch
+              checked={theme === "light"}
+              onChange={toggleTheme}
+              name="theme"
+              inputProps={{ "aria-label": "secondary checkbox" }}
+            />
             <div className="person">
               {auth.isAuthenticated || localStorage.getItem("access_token") ? (
                 <>
-                  <IoPersonCircle style={{ fontSize: "20px" }} />
-                  <span>{auth.user.name}</span>
+                  <Avatar
+                    className="avatar"
+                    alt="avatar"
+                    src={auth.user.image}
+                    aria-controls="simple-avatar"
+                    aria-haspopup="true"
+                    onClick={handleClickAvatar}
+                    tabIndex={0}
+                    style={{ margin: "15px" }}
+                  ></Avatar>
+                  <Menu
+                    className="menu"
+                    id="simple-avatar"
+                    anchorEl={anchorElAvatar}
+                    keepMounted
+                    disableScrollLock
+                    open={Boolean(anchorElAvatar)}
+                    onClose={handleClose}
+                    getContentAnchorEl={null}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "right",
+                    }}
+                  >
+                    <MenuItem key="profile" onClick={handleClose}>
+                      <Link to={"/profile"}>{translates.profile}</Link>
+                    </MenuItem>
+                    <MenuItem key="contact" onClick={handleClose}>
+                      <Link to={"/contact"}>{translates.contact}</Link>
+                    </MenuItem>
+                    <MenuItem key="logout" onClick={handleLogout}>
+                      <Link to={"/login"}>{translates.logout}</Link>
+                    </MenuItem>
+                  </Menu>
                   <div className={classes.root}>
                     <Badge badgeContent={countProduct} color="error">
                       <Link to={"/cart"}>
@@ -138,67 +195,39 @@ function Header() {
                   </div>
                 </>
               ) : (
-                ""
-              )}
-            </div>
-            <Select
-              value={isLanguage}
-              onChange={toggleLanguage}
-              className="select"
-              MenuProps={{ disableScrollLock: true }}
-            >
-              <MenuItem value="VI">VI</MenuItem>
-              <MenuItem value="ENG">ENG</MenuItem>
-            </Select>
-            <IconButton
-              aria-label="Menu"
-              aria-controls="simple-menu"
-              aria-haspopup="true"
-              onClick={handleClick}
-            >
-              <IoMenu />
-            </IconButton>
-            <Menu
-              className="menu"
-              id="simple-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              disableScrollLock
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-              getContentAnchorEl={null}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-            >
-              {auth.isAuthenticated
-                ? [
-                    <MenuItem key="profile" onClick={handleClose}>
-                      <Link to={"/profile"}>{translates.profile}</Link>
-                    </MenuItem>,
-                    <MenuItem key="contact" onClick={handleClose}>
-                      <Link to={"/contact"}>{translates.contact}</Link>
-                    </MenuItem>,
-                    <MenuItem key="logout" onClick={handleLogout}>
-                      <Link to={"/login"}>{translates.logout}</Link>
-                    </MenuItem>,
-                  ]
-                : [
+                <>
+                  <IconButton
+                    aria-label="Menu"
+                    aria-controls="simple-menu"
+                    aria-haspopup="true"
+                    onClick={handleClick}
+                  >
+                    <IoMenu />
+                  </IconButton>
+                  <Menu
+                    className="menu"
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    disableScrollLock
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                    getContentAnchorEl={null}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "left",
+                    }}
+                  >
                     <MenuItem key="login" onClick={handleClose}>
                       <Link to={"/login"}>{translates.login}</Link>
-                    </MenuItem>,
+                    </MenuItem>
                     <MenuItem key="register" onClick={handleClose}>
                       <Link to={"/register"}>{translates.register}</Link>
-                    </MenuItem>,
-                  ]}
-            </Menu>
-            <Switch
-              checked={theme === "light"}
-              onChange={toggleTheme}
-              name="theme"
-              inputProps={{ "aria-label": "secondary checkbox" }}
-            />
+                    </MenuItem>
+                  </Menu>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>

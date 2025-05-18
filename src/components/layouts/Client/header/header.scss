@@ -32,6 +32,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      .avatar {
+        cursor: pointer;
+        position: relative;
+        z-index: 5;
+      }
       span {
         margin: 0 10px 0 5px;
       }

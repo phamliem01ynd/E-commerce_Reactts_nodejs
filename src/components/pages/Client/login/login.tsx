@@ -18,7 +18,7 @@ import { FaEyeSlash } from "react-icons/fa";
 import "./login.scss";
 import { login } from "../../../../core/apis/userService";
 import { AuthService } from "../../../../core/services/authService";
-import { json, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 import { TranslateService } from "../../../../core/services/translateService";
 import { FaFacebook } from "react-icons/fa";
@@ -68,6 +68,7 @@ function Login() {
           email: resData?.user?.email ?? "",
           name: resData?.user?.name ?? "",
           phone: resData?.user?.phone ?? "",
+          image: resData?.user?.image ?? "",
         },
       });
       setSnackbar({
