@@ -7,7 +7,8 @@
   "enter_password": "Please enter your password",
   "welcome_back": "Welcome back",
   "please_login_to_use_all_features": "Please login to access all features",
-  "register": "Register",
+  "register": "Register",0
+  
   "quantity": "Quantity",
   "add_to_cart":"add_To_Cart",
   "send":"Send",
@@ -59,7 +60,8 @@
   "Storage":"Storage",
   "OS":"OS",
   "Connect": "Connect",
-  "Capacity": "Capacity"
+  "Capacity": "Capacity",
+  "DeleteAll": "Delete All"
 
 }
 

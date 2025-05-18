@@ -50,7 +50,6 @@
   "Cart_total":"Tổng tiền",
   "update":"Cập nhật",
   "apply": "Áp dụng",
-  "cart_total":"Cart Total",
   "category":"Category",
   "filterProduct": "Product Filter",
   "Sort":"Sort",
@@ -60,4 +59,7 @@
   "OS":"Hệ điều hành",
   "Connect": "Kết nối",
   "Capacity": "Công suất"
+  "cart_total":"Tổng tiền",
+  "DeleteAll": "Xóa hết"
+  
 }

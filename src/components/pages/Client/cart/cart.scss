@@ -94,18 +94,36 @@
     }
   }
   &__item {
+    width: 100%;
     border-radius: 20px;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
       rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
       rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-    thead{
-      tr{
+    thead {
+      tr {
         background-color: #9eff1f;
+      }
+    }
+    tbody {
+      td {
+        padding: 5px;
       }
     }
     table {
       background-color: #fff;
       border-radius: 20px;
+    }
+    .productt {
+      width: 35%;
+    }
+    .quantities {
+      width: 15%;
+    }
+    .prices {
+      width: 15%;
+    }
+    .totalprice {
+      width: 15%;
     }
     .product {
       display: flex;
@@ -116,14 +134,18 @@
         width: 135px;
         height: 200px;
         object-fit: contain;
-        margin-right: 15px;
+        margin-right: 5px;
       }
       .description {
+        display: flex;
+        align-items: start;
+        flex-direction: column;
         p {
-          font-size: 1.6rem;
+          font-size: 1.2rem;
         }
         h3 {
-          margin: 0;
+          font-size: 14px;
+          margin-bottom: 15px;
         }
       }
     }
@@ -139,9 +161,9 @@
         border: none;
       }
       input {
-        width: 50px;
+        width: 40px;
         height: auto;
-        margin: 0 5px;
+        margin: 0;
         border-radius: 10px;
         text-align: center;
       }
@@ -154,6 +176,9 @@
     }
     .price {
       font-size: 14px;
+    }
+    .action {
+      width: 10%;
     }
     .price_old {
       color: rgb(146, 4, 4);
