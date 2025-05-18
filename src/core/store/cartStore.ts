@@ -1,4 +1,5 @@
 import create from "zustand";
+import { persist } from "zustand/middleware";
 
 interface cartItem {
   id: string | number;
@@ -22,40 +23,47 @@ interface cartState {
   deleteAll: () => void;
 }
 
-export const useCartStore = create<cartState>((set, get) => ({
-  cart:[],
-  addToCart: (product) => {
-    const currentCart = get().cart;
-    const exist = currentCart.find((item) => item.id === product.id)
-    if(!exist){
-      set({ cart: [...currentCart, {...product, quantity: 1}]})
-    }
-  },
-
-  updateQuantity: (id, quantity) => {
-    const currentCart = get().cart;
-    const exist = currentCart.map(item =>
-      item.id === id ? { ...item, quantity: quantity + 1 } : item
-    );
-    if(exist){
-      set({ cart: exist })
-    }
-  },
-  reduceQuantity: (id, quantity) => {
-    const currentCart = get().cart;
-    const exist = currentCart.map(item => item.id === id ? {...item, quantity: quantity - 1} : item)
-    if(exist){
-      set({ cart: exist})
-    }
-  },
-
-  deleteProduct: (id) => {
-    const currentCart = get().cart;
-    const exist = currentCart.filter(item => item.id !== id);
-    set({ cart: [...exist]})
-  },
-
-  deleteAll:() => {
-    set({ cart : []})
-  }
-}))
+export const useCartStore = create<cartState>(
+  persist(
+    (set,get) => ({
+      cart:[],
+      addToCart: (product) => {
+        const currentCart = get().cart;
+        const exist = currentCart.find((item) => item.id === product.id)
+        if(!exist){
+          set({ cart: [...currentCart, {...product, quantity: 1}]})
+        }
+      },
+    
+      updateQuantity: (id, quantity) => {
+        const currentCart = get().cart;
+        const exist = currentCart.map(item =>
+          item.id === id ? { ...item, quantity: quantity + 1 } : item
+        );
+        if(exist){
+          set({ cart: exist })
+        }
+      },
+      reduceQuantity: (id, quantity) => {
+        const currentCart = get().cart;
+        const exist = currentCart.map(item => item.id === id ? {...item, quantity: quantity - 1} : item)
+        if(exist){
+          set({ cart: exist})
+        }
+      },
+    
+      deleteProduct: (id) => {
+        const currentCart = get().cart;
+        const exist = currentCart.filter(item => item.id !== id);
+        set({ cart: [...exist]})
+      },
+    
+      deleteAll:() => {
+        set({ cart : []})
+      }
+    }),
+    {
+      name: 'cart-storage',
+    },
+  )
+)
