@@ -57,6 +57,12 @@
 }
 .header-menu {
   margin: 10px 50px;
+  button{
+    span{
+      font-weight: 600;
+      color: #000;
+    }
+  }
 }
 header {
   width: 100vw;

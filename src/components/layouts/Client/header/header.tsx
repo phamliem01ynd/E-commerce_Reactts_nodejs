@@ -186,12 +186,7 @@ function Header() {
                     </MenuItem>
                   </Menu>
                   <div className={classes.root}>
-                    <Badge badgeContent={countProduct} color="error">
-                      <Link to={"/cart"}>
-                        {" "}
-                        <FaCartPlus style={{ fontSize: "18px" }} />
-                      </Link>
-                    </Badge>
+                    <Badge badgeContent={countProduct} color="error"><Link to={"/cart"}>{" "}<FaCartPlus style={{ fontSize: "18px" }} /></Link></Badge>
                   </div>
                 </>
               ) : (
@@ -232,12 +227,15 @@ function Header() {
         </div>
       </div>
       <div className="header-menu">
-        <Button
-          style={buttonStyle("Home")}
-          onClick={() => setActiveButton("Home")}
-        >
-          <Link to={"/"}>Home</Link>
-        </Button>
+        <Link to={"/"}>
+          <Button
+            style={buttonStyle("Home")}
+            onClick={() => setActiveButton("Home")}
+          >
+            Home
+          </Button>
+        </Link>
+
         <Button
           style={buttonStyle("Product")}
           onClick={() => setActiveButton("Product")}

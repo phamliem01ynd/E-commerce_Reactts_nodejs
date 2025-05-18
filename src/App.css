@@ -16,12 +16,18 @@ body{
   background-color: var(--background-one);
   text-rendering: optimizeSpeed;
   transition: all 0.3s ease-in-out;
+  header{
+    background-color: #fff;
+  }
 }
 
 .dark-theme {
   background-color: #212121;
   color: #fff;
   transition: all 0.3s ease-in-out;
+  header{ 
+    background-color: #000;
+  }
   a{
     color: #fff;
   }
