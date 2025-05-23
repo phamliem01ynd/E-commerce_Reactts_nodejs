@@ -15,38 +15,42 @@ export const routes = createBrowserRouter([
     children: [
       {
         index: true,
-        element:<Home/>
+        element: <Home />,
       },
       {
-        path:'home/:id',
-        element:<Home/>
+        path: "home/:id",
+        element: <Home />,
       },
       {
-        path:'/product/:id',
-        element:<ProductClient/>
+        path: "/product/:id",
+        element: <ProductClient />,
       },
       {
         path: "/login",
-        element: <Login/>,
+        element: <Login />,
       },
       {
-        path:'/register',
-        element:<Register/>,
+        path: "/register",
+        element: <Register />,
       },
       {
-        path:'/cart',
-        element:<Cart/>
-      }
-    ]
+        path: "/cart",
+        element: <Cart />,
+      },
+    ],
   },
   {
-    path:"Admin",
-    element:<LayoutAdmin/>,
-    children:[
+    path: "Admin",
+    element: <LayoutAdmin />,
+    children: [
       {
-        path:'product',
-        element:<ProductPage/>
-      }
-    ]
-  }
-])
+        path: "product",
+        element: <ProductPage />,
+      },
+      {
+        path: "product/edit/:id",
+        element: <ProductPage />,
+      },
+    ],
+  },
+]);

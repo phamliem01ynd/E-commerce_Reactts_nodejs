@@ -13,3 +13,4 @@ export interface Product{
 }
 
 export type ProductHome = Omit<Product, 'status'>
+export type CreateProduct = Omit<Product, 'id' | 'status'>;

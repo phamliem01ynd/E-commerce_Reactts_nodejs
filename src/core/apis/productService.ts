@@ -13,12 +13,8 @@ export const searchProduct = async (search : string | null) => {
   });
 }
 
-export const editProduct = async (id: number, data: Product) => {
+export const editProduct = async (formData : FormData) => {
   const api_url = `/product/update/${id}`;
-  const formData = new FormData();
-  Object.entries(data).forEach(([key, value]) => {
-    formData.append(key, value as any)
-  })
   return axios.put<Product>(api_url, formData)
 }
 
@@ -27,16 +23,12 @@ export const deleteProduct = async ( id: string | number ) => {
   return axios.post(api_url);
 }
 
-export const createProduct = async (data: Product) => {
+export const createProduct = async (formData: FormData) => {
   const api_url = "product/create-with-image";
-  const formData = new FormData();
-  Object.entries(data).forEach(([key, value]) => {
-    formData.append(key, value)
-  })
+  return axios.post(api_url, formData)
+}
 
-  return axios.post(api_url, formData, {
-    headers:{
-      'Content-Type': 'multipart/form-data'
-    }
-  })
+export const getProductById = async (id : string | number) => {
+  const api_url =`/product/findbyid/${id}`;
+  return axios.get<Product>(api_url);
 }
